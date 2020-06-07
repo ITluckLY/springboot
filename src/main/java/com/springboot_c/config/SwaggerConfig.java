@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @EnableSwagger2 //开启swaager
 public class SwaggerConfig {
   //http://localhost:8080/swagger-ui.html
-
+  //http://localhost:9895/swagger-ui.html
   //配置类swagger 的docket的bean 实例
   @Bean
   public Docket docket(Environment environment) {
@@ -37,6 +37,7 @@ public class SwaggerConfig {
     System.out.println(hjbl);
     return new Docket( DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
+        .groupName("鲁先生")
         .enable(hjbl)
         .select()
           // requestHandlerSwlwctors 配置要扫描接口的方式。
@@ -46,21 +47,6 @@ public class SwaggerConfig {
           //withClassAnnotaction 扫描类上的注解。
         .apis(RequestHandlerSelectors.basePackage("com.springboot_c.controller"))
         .build();
-  }
-
-
-  @Bean
-  public Docket docket1(){
-    return  new Docket(DocumentationType.SWAGGER_2).groupName("a");
-  }
-
-  @Bean
-  public Docket docket2(){
-    return  new Docket(DocumentationType.SWAGGER_2).groupName("b");
-  }
-  @Bean
-  public Docket docket3(){
-    return  new Docket(DocumentationType.SWAGGER_2).groupName("c");
   }
   //配置swagger 信息=apiinfo
   public ApiInfo apiInfo() {
@@ -77,4 +63,38 @@ public class SwaggerConfig {
         new ArrayList()
     );
   }
+
+  @Bean
+  public Docket docket1(){
+    return  new Docket(DocumentationType.SWAGGER_2)
+        .apiInfo(setInfo())
+        .groupName("a")
+        .select()
+        .apis(RequestHandlerSelectors.any())
+        .build();
+  }
+
+  private ApiInfo setInfo() {
+    Contact c1 = new Contact("a先生","baidu.com","110@.com");
+    return new ApiInfo(
+      "A先生的API 文档",
+      "dev",
+      "v1.0",
+      "www.com",
+      c1,
+      "api 2.9",
+      "bilibili",
+      new ArrayList()
+    );
+  }
+
+  @Bean
+  public Docket docket2(){
+    return  new Docket(DocumentationType.SWAGGER_2).groupName("b");
+  }
+  @Bean
+  public Docket docket3(){
+    return  new Docket(DocumentationType.SWAGGER_2).groupName("c");
+  }
+
 }
